@@ -1,0 +1,408 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AC9F11651AB9DBB200A3B096 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9F11641AB9DBB200A3B096 /* AppDelegate.swift */; };
+		AC9F11671AB9DBB200A3B096 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC9F11661AB9DBB200A3B096 /* Images.xcassets */; };
+		AC9F116A1AB9DBB200A3B096 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC9F11681AB9DBB200A3B096 /* MainMenu.xib */; };
+		AC9F11761AB9DBB200A3B096 /* SparcTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9F11751AB9DBB200A3B096 /* SparcTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AC9F11701AB9DBB200A3B096 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AC9F11571AB9DBB200A3B096 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AC9F115E1AB9DBB200A3B096;
+			remoteInfo = Sparc;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		AC9F115F1AB9DBB200A3B096 /* Sparc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sparc.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC9F11631AB9DBB200A3B096 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AC9F11641AB9DBB200A3B096 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		AC9F11661AB9DBB200A3B096 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		AC9F11691AB9DBB200A3B096 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		AC9F116F1AB9DBB200A3B096 /* SparcTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SparcTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC9F11741AB9DBB200A3B096 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AC9F11751AB9DBB200A3B096 /* SparcTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparcTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AC9F115C1AB9DBB200A3B096 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AC9F116C1AB9DBB200A3B096 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AC9F11561AB9DBB200A3B096 = {
+			isa = PBXGroup;
+			children = (
+				AC9F11611AB9DBB200A3B096 /* Sparc */,
+				AC9F11721AB9DBB200A3B096 /* SparcTests */,
+				AC9F11601AB9DBB200A3B096 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AC9F11601AB9DBB200A3B096 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AC9F115F1AB9DBB200A3B096 /* Sparc.app */,
+				AC9F116F1AB9DBB200A3B096 /* SparcTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AC9F11611AB9DBB200A3B096 /* Sparc */ = {
+			isa = PBXGroup;
+			children = (
+				AC9F11641AB9DBB200A3B096 /* AppDelegate.swift */,
+				AC9F11661AB9DBB200A3B096 /* Images.xcassets */,
+				AC9F11681AB9DBB200A3B096 /* MainMenu.xib */,
+				AC9F11621AB9DBB200A3B096 /* Supporting Files */,
+			);
+			path = Sparc;
+			sourceTree = "<group>";
+		};
+		AC9F11621AB9DBB200A3B096 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AC9F11631AB9DBB200A3B096 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AC9F11721AB9DBB200A3B096 /* SparcTests */ = {
+			isa = PBXGroup;
+			children = (
+				AC9F11751AB9DBB200A3B096 /* SparcTests.swift */,
+				AC9F11731AB9DBB200A3B096 /* Supporting Files */,
+			);
+			path = SparcTests;
+			sourceTree = "<group>";
+		};
+		AC9F11731AB9DBB200A3B096 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AC9F11741AB9DBB200A3B096 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AC9F115E1AB9DBB200A3B096 /* Sparc */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AC9F11791AB9DBB200A3B096 /* Build configuration list for PBXNativeTarget "Sparc" */;
+			buildPhases = (
+				AC9F115B1AB9DBB200A3B096 /* Sources */,
+				AC9F115C1AB9DBB200A3B096 /* Frameworks */,
+				AC9F115D1AB9DBB200A3B096 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Sparc;
+			productName = Sparc;
+			productReference = AC9F115F1AB9DBB200A3B096 /* Sparc.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AC9F116E1AB9DBB200A3B096 /* SparcTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AC9F117C1AB9DBB200A3B096 /* Build configuration list for PBXNativeTarget "SparcTests" */;
+			buildPhases = (
+				AC9F116B1AB9DBB200A3B096 /* Sources */,
+				AC9F116C1AB9DBB200A3B096 /* Frameworks */,
+				AC9F116D1AB9DBB200A3B096 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AC9F11711AB9DBB200A3B096 /* PBXTargetDependency */,
+			);
+			name = SparcTests;
+			productName = SparcTests;
+			productReference = AC9F116F1AB9DBB200A3B096 /* SparcTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AC9F11571AB9DBB200A3B096 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0620;
+				ORGANIZATIONNAME = "Artem Titoulenko";
+				TargetAttributes = {
+					AC9F115E1AB9DBB200A3B096 = {
+						CreatedOnToolsVersion = 6.2;
+					};
+					AC9F116E1AB9DBB200A3B096 = {
+						CreatedOnToolsVersion = 6.2;
+						TestTargetID = AC9F115E1AB9DBB200A3B096;
+					};
+				};
+			};
+			buildConfigurationList = AC9F115A1AB9DBB200A3B096 /* Build configuration list for PBXProject "Sparc" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AC9F11561AB9DBB200A3B096;
+			productRefGroup = AC9F11601AB9DBB200A3B096 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AC9F115E1AB9DBB200A3B096 /* Sparc */,
+				AC9F116E1AB9DBB200A3B096 /* SparcTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AC9F115D1AB9DBB200A3B096 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AC9F11671AB9DBB200A3B096 /* Images.xcassets in Resources */,
+				AC9F116A1AB9DBB200A3B096 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AC9F116D1AB9DBB200A3B096 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AC9F115B1AB9DBB200A3B096 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AC9F11651AB9DBB200A3B096 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AC9F116B1AB9DBB200A3B096 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AC9F11761AB9DBB200A3B096 /* SparcTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AC9F11711AB9DBB200A3B096 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AC9F115E1AB9DBB200A3B096 /* Sparc */;
+			targetProxy = AC9F11701AB9DBB200A3B096 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		AC9F11681AB9DBB200A3B096 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AC9F11691AB9DBB200A3B096 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		AC9F11771AB9DBB200A3B096 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		AC9F11781AB9DBB200A3B096 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		AC9F117A1AB9DBB200A3B096 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Sparc/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AC9F117B1AB9DBB200A3B096 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Sparc/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		AC9F117D1AB9DBB200A3B096 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = SparcTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Sparc.app/Contents/MacOS/Sparc";
+			};
+			name = Debug;
+		};
+		AC9F117E1AB9DBB200A3B096 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = SparcTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Sparc.app/Contents/MacOS/Sparc";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AC9F115A1AB9DBB200A3B096 /* Build configuration list for PBXProject "Sparc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AC9F11771AB9DBB200A3B096 /* Debug */,
+				AC9F11781AB9DBB200A3B096 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AC9F11791AB9DBB200A3B096 /* Build configuration list for PBXNativeTarget "Sparc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AC9F117A1AB9DBB200A3B096 /* Debug */,
+				AC9F117B1AB9DBB200A3B096 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		AC9F117C1AB9DBB200A3B096 /* Build configuration list for PBXNativeTarget "SparcTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AC9F117D1AB9DBB200A3B096 /* Debug */,
+				AC9F117E1AB9DBB200A3B096 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AC9F11571AB9DBB200A3B096 /* Project object */;
+}
