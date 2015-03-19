@@ -5,4 +5,4 @@ Sparc is an OS X menubar application that tells you when your Phabricator Diffs 
 
 ## Installation/Building
 
-Download the XCode project, open it, and run build.
+Download the XCode project, open it, and hit the build button.
