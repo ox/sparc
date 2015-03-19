@@ -13,44 +13,93 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Sparc" customModuleProvider="target">
             <connections>
-                <outlet property="statusBarItem" destination="0f9-Wa-77M" id="JOI-eF-xyV"/>
-                <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
+                <outlet property="SettingsWindow" destination="QvC-M9-y7g" id="pgy-Eq-a6v"/>
+                <outlet property="phabricatorCertificate" destination="quq-K1-G5d" id="PyG-Ua-pel"/>
+                <outlet property="phabricatorUrlField" destination="kNa-tg-nDx" id="IG3-IO-7W3"/>
+                <outlet property="settingsWindow" destination="QvC-M9-y7g" id="IvU-eg-net"/>
+                <outlet property="statusMenu" destination="0f9-Wa-77M" id="FAS-ZM-tZa"/>
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <window title="Sparc Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="480" height="360"/>
+            <rect key="contentRect" x="335" y="390" width="480" height="250"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
+                <rect key="frame" x="0.0" y="0.0" width="480" height="250"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kNa-tg-nDx">
-                        <rect key="frame" x="107" y="222" width="266" height="22"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="HPW-ZK-Oyh">
+                        <rect key="frame" x="20" y="183" width="351" height="22"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="https://secure.phabricator.com" drawsBackground="YES" usesSingleLineMode="YES" id="HPW-ZK-Oyh">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lkE-ut-xIR">
-                        <rect key="frame" x="105" y="252" width="109" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Project Directory" placeholderString="" id="tML-Xb-meY">
+                        <rect key="frame" x="18" y="213" width="109" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Phabricator URL" placeholderString="" id="tML-Xb-meY">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NT9-Wm-5fZ">
+                        <rect key="frame" x="373" y="177" width="93" height="32"/>
+                        <buttonCell key="cell" type="push" title="Connect" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="FXJ-1M-yQY">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="connectToPhabricator:" target="Voe-Tx-rLC" id="sO6-Tk-VkV"/>
+                        </connections>
+                    </button>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="quq-K1-G5d">
+                        <rect key="frame" x="20" y="42" width="440" height="96"/>
+                        <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="odu-x6-tdu">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="irY-pH-Dn0">
+                        <rect key="frame" x="20" y="146" width="143" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Phabricator Certificate" id="Njm-oA-vys">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DaQ-AJ-ugQ">
+                        <rect key="frame" x="354" y="144" width="106" height="17"/>
+                        <buttonCell key="cell" type="inline" title="Fetch Certificate" bezelStyle="inline" alignment="center" borderStyle="border" inset="2" id="Tic-hb-m4S">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="smallSystemBold"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="fetchCertificatePressed:" target="Voe-Tx-rLC" id="3QB-SA-HWN"/>
+                        </connections>
+                    </button>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U3K-KU-7Fd">
+                        <rect key="frame" x="18" y="18" width="117" height="18"/>
+                        <buttonCell key="cell" type="check" title="Launch at login" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ipE-Mc-ThI">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="507" y="579"/>
+            <point key="canvasLocation" x="507" y="524"/>
         </window>
         <menu id="0f9-Wa-77M">
             <items>
                 <menuItem title="Settings" id="A3k-Zf-VgP">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="settingsMenuItem:" target="Voe-Tx-rLC" id="lC2-Zo-jgR"/>
+                    </connections>
                 </menuItem>
                 <menuItem title="Quit" id="zEp-cR-lhg">
                     <modifierMask key="keyEquivalentModifierMask"/>
@@ -59,7 +108,7 @@
                     </connections>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="486" y="903.5"/>
+            <point key="canvasLocation" x="422" y="935.5"/>
         </menu>
     </objects>
 </document>
