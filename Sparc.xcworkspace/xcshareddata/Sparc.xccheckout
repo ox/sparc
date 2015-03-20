@@ -5,24 +5,20 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>F64CF51A-9C85-4C51-8556-E54C577412E0</string>
+	<string>925F9A4E-BD8A-4E9C-AA98-EABE0FD6373A</string>
 	<key>IDESourceControlProjectName</key>
 	<string>Sparc</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>4A6A1874481D25BD258BD3D90663E2913A0295A5</key>
 		<string>github.com:ox/sparc.git</string>
-		<key>67620B5EFA902936DF04070AF595B76AB0333747</key>
-		<string>https://github.com/Alamofire/Alamofire.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Sparc.xcodeproj</string>
+	<string>Sparc.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>4A6A1874481D25BD258BD3D90663E2913A0295A5</key>
-		<string>../..</string>
-		<key>67620B5EFA902936DF04070AF595B76AB0333747</key>
-		<string>../../../sparc/Alamofire</string>
+		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>github.com:ox/sparc.git</string>
@@ -36,17 +32,9 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>67620B5EFA902936DF04070AF595B76AB0333747</string>
-			<key>IDESourceControlWCCName</key>
-			<string>Alamofire</string>
-		</dict>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>4A6A1874481D25BD258BD3D90663E2913A0295A5</string>
 			<key>IDESourceControlWCCName</key>
-			<string>Sparc</string>
+			<string>sparc</string>
 		</dict>
 	</array>
 </dict>

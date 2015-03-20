@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7DE9BF3BAB4407B5A7439A85 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F7DE82351CEFA0B6A86FBA /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		AC9F11651AB9DBB200A3B096 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9F11641AB9DBB200A3B096 /* AppDelegate.swift */; };
 		AC9F11671AB9DBB200A3B096 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC9F11661AB9DBB200A3B096 /* Images.xcassets */; };
 		AC9F116A1AB9DBB200A3B096 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC9F11681AB9DBB200A3B096 /* MainMenu.xib */; };
 		AC9F11761AB9DBB200A3B096 /* SparcTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9F11751AB9DBB200A3B096 /* SparcTests.swift */; };
+		ACA345E21ABCBA7F001243E6 /* swift-json-class.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA345E11ABCBA7F001243E6 /* swift-json-class.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,6 +26,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		19F7DE82351CEFA0B6A86FBA /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8AA6E25A75A8595D91ECB3FE /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		954B92D58CA22CAFD2281AF5 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		AC2638C21ABBF373005FD905 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "Pods/../build/Debug-iphoneos/Pods/Alamofire.framework"; sourceTree = "<group>"; };
 		AC9F115F1AB9DBB200A3B096 /* Sparc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sparc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC9F11631AB9DBB200A3B096 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AC9F11641AB9DBB200A3B096 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -32,6 +38,7 @@
 		AC9F116F1AB9DBB200A3B096 /* SparcTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SparcTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC9F11741AB9DBB200A3B096 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AC9F11751AB9DBB200A3B096 /* SparcTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparcTests.swift; sourceTree = "<group>"; };
+		ACA345E11ABCBA7F001243E6 /* swift-json-class.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "swift-json-class.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DE9BF3BAB4407B5A7439A85 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,12 +60,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		62898A94C9061BE38BACE15D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8AA6E25A75A8595D91ECB3FE /* Pods.debug.xcconfig */,
+				954B92D58CA22CAFD2281AF5 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		A972C9F38B014C5D3F81D27B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AC2638C21ABBF373005FD905 /* Alamofire.framework */,
+				19F7DE82351CEFA0B6A86FBA /* Pods.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		AC9F11561AB9DBB200A3B096 = {
 			isa = PBXGroup;
 			children = (
 				AC9F11611AB9DBB200A3B096 /* Sparc */,
 				AC9F11721AB9DBB200A3B096 /* SparcTests */,
 				AC9F11601AB9DBB200A3B096 /* Products */,
+				62898A94C9061BE38BACE15D /* Pods */,
+				A972C9F38B014C5D3F81D27B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -77,6 +105,7 @@
 				AC9F11661AB9DBB200A3B096 /* Images.xcassets */,
 				AC9F11681AB9DBB200A3B096 /* MainMenu.xib */,
 				AC9F11621AB9DBB200A3B096 /* Supporting Files */,
+				ACA345E11ABCBA7F001243E6 /* swift-json-class.swift */,
 			);
 			path = Sparc;
 			sourceTree = "<group>";
@@ -113,9 +142,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AC9F11791AB9DBB200A3B096 /* Build configuration list for PBXNativeTarget "Sparc" */;
 			buildPhases = (
+				FEDFD8668717DAAEF537B9A4 /* Check Pods Manifest.lock */,
 				AC9F115B1AB9DBB200A3B096 /* Sources */,
 				AC9F115C1AB9DBB200A3B096 /* Frameworks */,
 				AC9F115D1AB9DBB200A3B096 /* Resources */,
+				5E6AF62832FF5E8FB6E3ADA7 /* Embed Pods Frameworks */,
+				0EB5B065ECC699C3CC4E8226 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -200,11 +232,60 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0EB5B065ECC699C3CC4E8226 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5E6AF62832FF5E8FB6E3ADA7 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FEDFD8668717DAAEF537B9A4 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		AC9F115B1AB9DBB200A3B096 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACA345E21ABCBA7F001243E6 /* swift-json-class.swift in Sources */,
 				AC9F11651AB9DBB200A3B096 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -318,22 +399,40 @@
 		};
 		AC9F117A1AB9DBB200A3B096 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8AA6E25A75A8595D91ECB3FE /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/Pods",
+				);
 				INFOPLIST_FILE = Sparc/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
 		AC9F117B1AB9DBB200A3B096 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 954B92D58CA22CAFD2281AF5 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/Pods",
+				);
 				INFOPLIST_FILE = Sparc/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -393,6 +492,7 @@
 				AC9F117B1AB9DBB200A3B096 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AC9F117C1AB9DBB200A3B096 /* Build configuration list for PBXNativeTarget "SparcTests" */ = {
 			isa = XCConfigurationList;
@@ -401,6 +501,7 @@
 				AC9F117E1AB9DBB200A3B096 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
