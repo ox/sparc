@@ -13,15 +13,33 @@ class Diff : Deserializable {
   var ID : Int = 0
   var statusName : String = ""
   var title : String = ""
+  var branch : String = ""
+  var URI : NSURL = NSURL()
   
+  var createdAt : NSDate = NSDate()
+  var modifiedAt : NSDate = NSDate()
+  
+  var reviewerPHIDs : [String] = []
+
   required init(data : [String: AnyObject]) {
     ID <<< data["id"]
     statusName <<< data["statusName"]
     title <<< data["title"]
+    branch <<< data["branch"]
+    URI <<< data["uri"]
+    
+    createdAt <<< data["dateCreated"]
+    modifiedAt <<< data["dateModified"]
+    
+    reviewerPHIDs <<< data["reviewers"]
   }
   
   func DisplayTitle() -> String {
-    let displayTitle = String(format: "%@: %d - %@", self.statusName, self.ID, self.title)
-    return displayTitle
+    return String(format: "%@: %d - %@ (%@), created on %@, modified on: %@",
+      self.statusName, self.ID, self.title, self.URI, self.createdAt, self.modifiedAt)
+  }
+  
+  func MenuBarTitle() -> String {
+    return String(format: "%@: %d", self.statusName, self.ID)
   }
 }

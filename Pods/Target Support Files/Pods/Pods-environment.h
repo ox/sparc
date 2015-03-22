@@ -24,6 +24,18 @@
 #define COCOAPODS_VERSION_MINOR_JSONHelper 4
 #define COCOAPODS_VERSION_PATCH_JSONHelper 1
 
+// Promissum
+#define COCOAPODS_POD_AVAILABLE_Promissum
+#define COCOAPODS_VERSION_MAJOR_Promissum 0
+#define COCOAPODS_VERSION_MINOR_Promissum 2
+#define COCOAPODS_VERSION_PATCH_Promissum 2
+
+// Promissum/Core
+#define COCOAPODS_POD_AVAILABLE_Promissum_Core
+#define COCOAPODS_VERSION_MAJOR_Promissum_Core 0
+#define COCOAPODS_VERSION_MINOR_Promissum_Core 2
+#define COCOAPODS_VERSION_PATCH_Promissum_Core 2
+
 // SwiftyJSON
 #define COCOAPODS_POD_AVAILABLE_SwiftyJSON
 #define COCOAPODS_VERSION_MAJOR_SwiftyJSON 2

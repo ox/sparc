@@ -12,6 +12,7 @@ import Alamofire
 import CryptoSwift
 import SwiftyJSON
 import JSONHelper
+import Promissum
 
 class Phabricator {
   var host : NSURL
@@ -52,8 +53,7 @@ class Phabricator {
   
   // send a request to Conduit. This method json serialzes the Dictionary, and provides a pretty raw callback which will be called
   // when the request returns
-  private func sendRequest(type: Alamofire.Method, endpoint : String, params : [String:AnyObject],
-    completionHandler: ((NSURLRequest, NSHTTPURLResponse?, AnyObject?, NSError?) -> Void)?) {
+  private func sendRequest(type: Alamofire.Method, endpoint : String, params : [String:AnyObject]) -> Promise<AnyObject> {
       
       let requestUrl = host.URLByAppendingPathComponent(endpoint)
       
@@ -75,15 +75,12 @@ class Phabricator {
         "__conduit__": true
       ]
       
-      if let handler = completionHandler? {
-        Alamofire.request(.POST, requestUrl, parameters: parameters)
-          .responseJSON(completionHandler: handler)
-      }
-      
+      return Alamofire.request(.POST, requestUrl, parameters: parameters).responseJSONPromise()
   }
   
   // Connect to conduit to retrieve a session key, connection ID, and the user PHID
-  func connect(callback: ((NSError!) -> Void)?) {
+  func connect() -> Promise<AnyObject> {
+    var promise = PromiseSource<AnyObject>()
     
     // Create the conduit request to be able to fetch a token
     let date = NSDate()
@@ -102,38 +99,35 @@ class Phabricator {
     ]
     
     // Request a connectionID, sessionKey, and the user PHID
-    sendRequest(.POST, endpoint: "conduit.connect", params: conduitParameters) { (_, _, json, error) in
-      if error != nil {
-        NSLog("error contacting Phabricator: %@", error!)
-        if let handler = callback {
-          handler(error)
+    sendRequest(.POST, endpoint: "conduit.connect", params: conduitParameters)
+      .then { json in
+        let json = JSON(json)
+        
+        // Check if there's an error returned from Phabricator
+        if let error_info = json["error_info"].string {
+          NSLog("request error: %@", error_info)
+          promise.reject(NSError(domain: "err", code: 2, userInfo: [:]))
+          return
         }
-        return
+    
+        // The token request was good, save the values
+        let result = json["result"]
+        self.connectionID = result["connectionID"].int
+        self.sessionKey = result["sessionKey"].string
+        self.userPHID = result["userPHID"].string
+        self.connected = true
+        promise.resolve([:])
       }
-      
-      var json = JSON(json!)
-      
-      // Check if there's an error returned from Phabricator
-      if let error_info = json["error_info"].string {
-        NSLog("request error: %@", error_info)
-        return
-      }
-  
-      // The token request was good, save the values
-      let result = json["result"]
-      self.connectionID = result["connectionID"].intValue
-      self.sessionKey = result["sessionKey"].stringValue
-      self.userPHID = result["userPHID"].stringValue
-      self.connected = true
-      if let handler = callback {
-        handler(error)
-      }
-    }
+    
+    return promise.promise
   }
   
-  func getAuthoredDiffs() -> NSError! {
+  func getAuthoredDiffs(_: AnyObject) -> Promise<AnyObject> {
+    var promise = PromiseSource<AnyObject>()
+    
     if !self.connected {
-      return NSError(domain: "err", code: 2, userInfo: nil)
+      promise.reject(NSError(domain: "err", code: 2, userInfo: nil))
+      return promise.promise
     }
     
     let queryParams : [String:AnyObject] = [
@@ -141,33 +135,25 @@ class Phabricator {
       "status": "status-open"
     ]
     
-    sendRequest(.POST, endpoint: "differential.query", params: queryParams) { (request, _, json, error) in
-      if error != nil {
-        NSLog("error contacting Phabricator: %@", error!)
-        return
-      }
-      
-      var json = JSON(json!)
-      
-      // Check if there's an error returned from Phabricator
-      if let error_info = json["error_info"].string {
-        NSLog("request error: %@", error_info)
-        return
-      }
-      
-      let result = json["result"]
-      
-      var diffs : [Diff]?
-      diffs <<<<* result.rawValue // I really hate this syntax
-      
-      println("diffs:\n")
-      if let diffs = diffs {
-        for diff in diffs {
-          println(diff.DisplayTitle())
+    sendRequest(.POST, endpoint: "differential.query", params: queryParams)
+      .then { json in
+        let json = JSON(json)
+
+        // Check if there's an error returned from Phabricator
+        if let error_info = json["error_info"].string {
+          NSLog("request error: %@", error_info)
+          return
         }
+        
+        let result = json["result"]
+        
+        println(result)
+        
+        var diffs : [Diff]?
+        diffs <<<<* result.rawValue // I really hate this syntax
+        promise.resolve(diffs!)
       }
-    }
     
-    return nil
+    return promise.promise
   }
 }

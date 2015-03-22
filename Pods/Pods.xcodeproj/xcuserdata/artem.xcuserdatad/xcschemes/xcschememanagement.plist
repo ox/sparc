@@ -19,6 +19,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-Promissum.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-SwiftyJSON.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -32,27 +37,32 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>1C668DD02B4B77F5D367CF2F</key>
+		<key>043FC6AB49B5F67DF3817263</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>2CFF9F82075C8DC98923F626</key>
+		<key>6BCB9D74B07AB94CA82F1FC2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4817C4E0DC06E6A60326F0DD</key>
+		<key>72626D96C9979730666E52CD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E8FC56A954AEE0C4265B164A</key>
+		<key>8EE08D8616EBC54536D22985</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F1F11DC8537C35701FC69D59</key>
+		<key>9B309EAF883A31132A7818E3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CC66569DCAF480CCB4F13B17</key>
 		<dict>
 			<key>primary</key>
 			<true/>
