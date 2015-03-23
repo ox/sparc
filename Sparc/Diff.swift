@@ -42,11 +42,6 @@ class Diff : Deserializable {
     reviewerPHIDs <<< data["reviewers"]
   }
   
-  func DisplayTitle() -> String {
-    return String(format: "%@: %d - %@ (%@), created on %@, modified on: %@",
-      self.statusName, self.ID, self.title, self.URI, self.createdAt, self.modifiedAt)
-  }
-  
   func MenuBarTitle() -> String {
     var dateFormatter = NSDateFormatter()
     dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
@@ -55,29 +50,5 @@ class Diff : Deserializable {
     return String(format: "%@: %d (%@)", self.statusName, self.ID, dateFormatter.stringFromDate(self.modifiedAt))
   }
   
-// TODO(artem): conforming to NSCoding should happen some day? not sure if it's necessary
-//  required convenience init(coder decoder: NSCoder) {
-//    self.init()
-//    self.ID = decoder.decodeIntegerForKey("ID")
-//    self.status = decoder.decodeObjectForKey("status") as Int?
-//    self.statusName = decoder.decodeObjectForKey("statusName") as String?
-//    self.statusName = decoder.decodeObjectForKey("statusName") as String?
-//    self.statusName = decoder.decodeObjectForKey("statusName") as String?
-//    self.statusName = decoder.decodeObjectForKey("statusName") as String?
-//    self.statusName = decoder.decodeObjectForKey("statusName") as String?
-//    self.statusName = decoder.decodeObjectForKey("modifiedAt") as String?
-//    self.reviewerPHIDs = decoder.decodeObjectForKey("reviewerPHIDs") as [String]!
-//  }
-//  
-//  func encodeWithCoder(coder: NSCoder) {
-//    coder.encodeInteger(self.ID, forKey: "ID")
-//    coder.encodeConditionalObject(self.status, forKey: "status")
-//    coder.encodeObject(self.statusName, forKey: "statusName")
-//    coder.encodeObject(self.title, forKey: "title")
-//    coder.encodeObject(self.branch, forKey: "branch")
-//    coder.encodeObject(self.URI, forKey: "uri")
-//    coder.encodeObject(self.createdAt, forKey: "createdAt")
-//    coder.encodeObject(self.modifiedAt, forKey: "modifiedAt")
-//    coder.encodeObject(self.reviewerPHIDs, forKey: "reviewerPHIDs")
-//  }
+  // TODO(artem): conforming to NSCoding should happen some day? not sure if it's necessary
 }
