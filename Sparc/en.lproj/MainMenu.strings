@@ -1,0 +1,15 @@
+
+/* Class = "NSMenu"; title = "foo"; ObjectID = "0f9-Wa-77M"; */
+"0f9-Wa-77M.title" = "foo";
+
+/* Class = "NSMenuItem"; title = "Settings"; ObjectID = "A3k-Zf-VgP"; */
+"A3k-Zf-VgP.title" = "Settings";
+
+/* Class = "NSWindow"; title = "Sparc Settings"; ObjectID = "QvC-M9-y7g"; */
+"QvC-M9-y7g.title" = "Sparc Settings";
+
+/* Class = "NSTextFieldCell"; title = "For now, Sparc uses your ~/.arcrc to interact with your Phabricator instance"; ObjectID = "azk-Cb-aOA"; */
+"azk-Cb-aOA.title" = "For now, Sparc uses your ~/.arcrc to interact with your Phabricator instance";
+
+/* Class = "NSMenuItem"; title = "Quit"; ObjectID = "zEp-cR-lhg"; */
+"zEp-cR-lhg.title" = "Quit";
