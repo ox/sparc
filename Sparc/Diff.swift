@@ -11,8 +11,17 @@ import JSONHelper
 
 class Diff : Deserializable {
   var ID : Int = 0
+  
+  // The Status of a Diff can be one of several numbers:
+  //
+  //    0 - Needs Review
+  //    1 - Needs Revision
+  //    2 - Accepted
+  //    3 - Closed
+  //    4 - Abandoned
   var status : Int?
   var statusName : String = ""
+  
   var title : String = ""
   var branch : String = ""
   var URI : NSURL = NSURL()

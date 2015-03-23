@@ -43,6 +43,12 @@
         <menu title="foo" id="0f9-Wa-77M">
             <items>
                 <menuItem isSeparatorItem="YES" id="Ybs-jQ-cFC"/>
+                <menuItem title="Differential" id="tZ7-oU-biF">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="openDifferentialHostURL:" target="Voe-Tx-rLC" id="KkW-bJ-spi"/>
+                    </connections>
+                </menuItem>
                 <menuItem title="Settings" id="A3k-Zf-VgP">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>

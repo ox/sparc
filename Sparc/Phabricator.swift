@@ -180,8 +180,33 @@ class Phabricator {
         let result = json["result"]
         var diffs : [Diff]?
         diffs <<<<* result.rawValue
-        promise.resolve(diffs!.filter { $0.status != 0 })
+        promise.resolve(diffs!.filter { $0.status == 1 || $0.status == 2 })
       }
+    
+    return promise.promise
+  }
+  
+  func getDiffsToReview() -> Promise<AnyObject> {
+    var promise = PromiseSource<AnyObject>()
+    
+    if !self.connected {
+      promise.reject(NSError(domain: "err", code: 2, userInfo: nil))
+      return promise.promise
+    }
+    
+    let queryParams : [String:AnyObject] = [
+      "reviewers" : NSArray(object: self.userPHID!),
+      "status": "status-open"
+    ]
+    
+    sendRequest(.POST, endpoint: "differential.query", params: queryParams)
+      .then { json in
+        let json = JSON(json)
+        let result = json["result"]
+        var diffs : [Diff]?
+        diffs <<<<* result.rawValue
+        promise.resolve(diffs!.filter { $0.status == 0 })
+    }
     
     return promise.promise
   }

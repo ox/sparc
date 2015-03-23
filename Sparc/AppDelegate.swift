@@ -23,6 +23,14 @@ class AppDelegate: NSObject, NSUserNotificationCenterDelegate, NSApplicationDele
   
   // NSMenu
   @IBOutlet weak var statusMenu: NSMenu!
+  
+  @IBAction func openDifferentialHostURL(sender: AnyObject) {
+    if let hostURL = self.API?.host {
+      let differential = hostURL.URLByDeletingLastPathComponent!.URLByAppendingPathComponent("/differential")
+      NSWorkspace.sharedWorkspace().openURL(differential)
+    }
+  }
+  
   @IBAction func settingsMenuItem(sender: AnyObject) {
       settingsWindow.makeKeyAndOrderFront(sender)
       NSApp.activateIgnoringOtherApps(true)
@@ -50,15 +58,24 @@ class AppDelegate: NSObject, NSUserNotificationCenterDelegate, NSApplicationDele
   }
   
   func refreshDiffs() {
-    if let api = self.API {
-      api.getAuthoredDiffs()
-        .then { diffs in
-          var newTitle = String(format: "Sparc: %d", diffs.count)
-          self.statusItem.title = newTitle
-          for diff in diffs as [Diff] {
-            self.addMenuItemForDiff(diff)
+    if let api = self.API {      
+      whenBoth(api.getAuthoredDiffs(), api.getDiffsToReview())
+        .then { authored, toReview in
+          if let authored = authored as? [Diff] {
+            if let toReview = toReview as? [Diff] {
+              var newTitle = String(format: "Sparc: %d", authored.count + toReview.count)
+              self.statusItem.title = newTitle
+              
+              for diff in authored {
+                self.addMenuItemForDiff(diff)
+              }
+              
+              for diff in toReview {
+                self.addMenuItemForDiff(diff)
+              }
+            }
           }
-      }
+        }
     }
   }
   
