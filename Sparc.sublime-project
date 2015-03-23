@@ -1,0 +1,30 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "."
+		}
+	],
+  "build_systems": [
+    {
+      "name": "Xcode Build",
+      "cmd": [ "xcodebuild", "-workspace", "$project_path/$project_base_name.xcworkspace", "-scheme", "$project_base_name", "-configuration", "Debug" ],
+
+      "variants": [
+        {
+          "name": "Xcode Run",
+          "cmd": [ "open", "$project_path/build/Debug/$project_base_name.app" ],
+        },
+        {
+          "name": "Xcode Build Release",
+          "cmd": [ "xcodebuild",  "-workspace", "$project_path/$project_base_name.xcworkspace", "-scheme", "$project_base_name", "-configuration", "Release" ],
+        },
+        {
+          "name": "Xcode Run Release",
+          "cmd": [ "open", "$project_path/build/Release/$project_base_name.app" ]
+        }
+      ]
+    }
+  ]
+}

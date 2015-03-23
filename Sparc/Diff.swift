@@ -11,6 +11,7 @@ import JSONHelper
 
 class Diff : Deserializable {
   var ID : Int = 0
+  var status : Int?
   var statusName : String = ""
   var title : String = ""
   var branch : String = ""
@@ -21,15 +22,22 @@ class Diff : Deserializable {
   
   var reviewerPHIDs : [String] = []
 
-  required init(data : [String: AnyObject]) {
+  convenience required init(data : [String: AnyObject]) {
+    self.init()
     ID <<< data["id"]
+    status <<< data["status"]
     statusName <<< data["statusName"]
     title <<< data["title"]
     branch <<< data["branch"]
     URI <<< data["uri"]
     
-    createdAt <<< data["dateCreated"]
-    modifiedAt <<< data["dateModified"]
+    var createdAtInterval : Int = 0
+    createdAtInterval <<< data["dateCreated"]
+    createdAt = NSDate(timeIntervalSince1970: NSTimeInterval(createdAtInterval))
+    
+    var modifiedAtInterval : Int = 0
+    modifiedAtInterval <<< data["dateModified"]
+    modifiedAt = NSDate(timeIntervalSince1970: NSTimeInterval(modifiedAtInterval))
     
     reviewerPHIDs <<< data["reviewers"]
   }
@@ -40,6 +48,36 @@ class Diff : Deserializable {
   }
   
   func MenuBarTitle() -> String {
-    return String(format: "%@: %d", self.statusName, self.ID)
+    var dateFormatter = NSDateFormatter()
+    dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
+    dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
+    dateFormatter.doesRelativeDateFormatting = true
+    return String(format: "%@: %d (%@)", self.statusName, self.ID, dateFormatter.stringFromDate(self.modifiedAt))
   }
+  
+// TODO(artem): conforming to NSCoding should happen some day? not sure if it's necessary
+//  required convenience init(coder decoder: NSCoder) {
+//    self.init()
+//    self.ID = decoder.decodeIntegerForKey("ID")
+//    self.status = decoder.decodeObjectForKey("status") as Int?
+//    self.statusName = decoder.decodeObjectForKey("statusName") as String?
+//    self.statusName = decoder.decodeObjectForKey("statusName") as String?
+//    self.statusName = decoder.decodeObjectForKey("statusName") as String?
+//    self.statusName = decoder.decodeObjectForKey("statusName") as String?
+//    self.statusName = decoder.decodeObjectForKey("statusName") as String?
+//    self.statusName = decoder.decodeObjectForKey("modifiedAt") as String?
+//    self.reviewerPHIDs = decoder.decodeObjectForKey("reviewerPHIDs") as [String]!
+//  }
+//  
+//  func encodeWithCoder(coder: NSCoder) {
+//    coder.encodeInteger(self.ID, forKey: "ID")
+//    coder.encodeConditionalObject(self.status, forKey: "status")
+//    coder.encodeObject(self.statusName, forKey: "statusName")
+//    coder.encodeObject(self.title, forKey: "title")
+//    coder.encodeObject(self.branch, forKey: "branch")
+//    coder.encodeObject(self.URI, forKey: "uri")
+//    coder.encodeObject(self.createdAt, forKey: "createdAt")
+//    coder.encodeObject(self.modifiedAt, forKey: "modifiedAt")
+//    coder.encodeObject(self.reviewerPHIDs, forKey: "reviewerPHIDs")
+//  }
 }

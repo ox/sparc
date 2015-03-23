@@ -14,8 +14,31 @@ import SwiftyJSON
 import JSONHelper
 import Promissum
 
+class Host : Deserializable {
+  var host : String = ""
+  var user : String?
+  var cert : String?
+
+  required init(data: [String : AnyObject]) {
+    user <<< data["user"]
+    cert <<< data["cert"]
+  }
+}
+
+class ArcRC : Deserializable {
+  var hosts : [String:Host]?
+  
+  required init(data: [String:AnyObject]) {
+    for (hostURL, contents) in data {
+      var lhost : Host?
+      lhost <<<< contents
+      lhost?.host = hostURL
+    }
+  }
+}
+
 class Phabricator {
-  var host : NSURL
+  var host : NSURL?
   var connected : Bool = false
   private var username : String?
   private var certificate : String?
@@ -23,18 +46,28 @@ class Phabricator {
   private var connectionID : Int?
   private var userPHID : String?
   
-  init(atURL: NSURL) {
-    host = atURL
+  init(atURL: NSURL, forUser: String, withCert: String) {
+    self.host = atURL
+    self.username = forUser
+    self.certificate = withCert
   }
   
-  init(arcRCFilePath: String) {
-    self.host = NSURL(string: "")!
+  init?(arcRCFilePath: String) {
+    var readError : NSError?
+    let jsonData = NSData(contentsOfFile: arcRCFilePath, options: .DataReadingMappedIfSafe, error: &readError)
+    if readError != nil {
+      NSLog("error reading ~/.arcrc: %@", readError!)
+      return nil
+    }
     
-    let jsonData = NSData(contentsOfFile: arcRCFilePath, options: .DataReadingMappedIfSafe, error: nil)
     var jsonError : NSError?
     var arc = NSJSONSerialization.JSONObjectWithData(jsonData!, options: .MutableContainers, error: &jsonError) as NSDictionary
-    
-    if let hosts = arc["hosts"]! as? NSDictionary {
+    if jsonError != nil {
+      NSLog("error parsing json in ~/.arcrc: %@", jsonError!)
+      return nil
+    }
+
+    if let hosts = arc["hosts"] as? NSDictionary {
       let key = hosts.allKeys[0] as String
       let firstHost = hosts.valueForKey(key) as NSDictionary
       self.host = NSURL(string: key)!
@@ -54,28 +87,42 @@ class Phabricator {
   // send a request to Conduit. This method json serialzes the Dictionary, and provides a pretty raw callback which will be called
   // when the request returns
   private func sendRequest(type: Alamofire.Method, endpoint : String, params : [String:AnyObject]) -> Promise<AnyObject> {
-      
-      let requestUrl = host.URLByAppendingPathComponent(endpoint)
-      
-      var localParams = params
-      
-      if self.connected {
-        localParams["__conduit__"] = [
-          "sessionKey": self.sessionKey!,
-          "connectionID": self.connectionID!
-        ]
-      }
-      
-      let jsonSerializedConduitParams = NSJSONSerialization.dataWithJSONObject(localParams, options:NSJSONWritingOptions(0), error: nil)
-      let stringEncodedSerializedConduitParams = NSString(data: jsonSerializedConduitParams!, encoding: NSUTF8StringEncoding) as NSString!
-      
-      var parameters : [String: AnyObject] = [
-        "params": stringEncodedSerializedConduitParams,
-        "output": "json",
-        "__conduit__": true
+    let requestUrl = host?.URLByAppendingPathComponent(endpoint)
+    
+    var localParams = params
+    if self.connected {
+      localParams["__conduit__"] = [
+        "sessionKey": self.sessionKey!,
+        "connectionID": self.connectionID!
       ]
-      
-      return Alamofire.request(.POST, requestUrl, parameters: parameters).responseJSONPromise()
+    }
+    
+    let jsonSerializedConduitParams = NSJSONSerialization.dataWithJSONObject(localParams, options:NSJSONWritingOptions(0), error: nil)
+    let stringEncodedSerializedConduitParams = NSString(data: jsonSerializedConduitParams!, encoding: NSUTF8StringEncoding) as NSString!
+    
+    var parameters : [String: AnyObject] = [
+      "params": stringEncodedSerializedConduitParams,
+      "output": "json",
+      "__conduit__": true
+    ]
+  
+    var promise = PromiseSource<AnyObject>()
+    Alamofire.request(.POST, requestUrl!, parameters: parameters)
+      .responseJSONPromise()
+      .then { json in
+          let swiftyjson = JSON(json)
+          
+          // Check if there's an error returned from Phabricator
+          if let error_info = swiftyjson["error_info"].string {
+            NSLog("request error: %@", error_info)
+            promise.reject(NSError(domain: "json", code: 3, userInfo: ["error": error_info]))
+            return
+          }
+ 
+          promise.resolve(json)
+        }
+    
+    return promise.promise
   }
   
   // Connect to conduit to retrieve a session key, connection ID, and the user PHID
@@ -93,7 +140,7 @@ class Phabricator {
       "clientVersion": 0,
       "clientDescription": "A menubar app for managing your diffs",
       "user": username!,
-      "host": String(format: "%@://%@", host.scheme!, host.host!),
+      "host": String(format: "%@://%@", host!.scheme!, host!.host!),
       "authToken": token,
       "authSignature": signature.lowercaseString
     ]
@@ -102,14 +149,6 @@ class Phabricator {
     sendRequest(.POST, endpoint: "conduit.connect", params: conduitParameters)
       .then { json in
         let json = JSON(json)
-        
-        // Check if there's an error returned from Phabricator
-        if let error_info = json["error_info"].string {
-          NSLog("request error: %@", error_info)
-          promise.reject(NSError(domain: "err", code: 2, userInfo: [:]))
-          return
-        }
-    
         // The token request was good, save the values
         let result = json["result"]
         self.connectionID = result["connectionID"].int
@@ -122,7 +161,7 @@ class Phabricator {
     return promise.promise
   }
   
-  func getAuthoredDiffs(_: AnyObject) -> Promise<AnyObject> {
+  func getAuthoredDiffs() -> Promise<AnyObject> {
     var promise = PromiseSource<AnyObject>()
     
     if !self.connected {
@@ -138,20 +177,10 @@ class Phabricator {
     sendRequest(.POST, endpoint: "differential.query", params: queryParams)
       .then { json in
         let json = JSON(json)
-
-        // Check if there's an error returned from Phabricator
-        if let error_info = json["error_info"].string {
-          NSLog("request error: %@", error_info)
-          return
-        }
-        
         let result = json["result"]
-        
-        println(result)
-        
         var diffs : [Diff]?
-        diffs <<<<* result.rawValue // I really hate this syntax
-        promise.resolve(diffs!)
+        diffs <<<<* result.rawValue
+        promise.resolve(diffs!.filter { $0.status != 0 })
       }
     
     return promise.promise
