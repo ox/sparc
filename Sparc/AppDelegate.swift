@@ -119,6 +119,11 @@ class AppDelegate: NSObject, NSUserNotificationCenterDelegate, NSApplicationDele
   func addMenuItemForDiff(diff : Diff) {
     // Check if the item already exists, update it's title if it does
     if let item = statusMenu.itemWithTag(diff.ID) {
+      // If there was a change of status for the diff, notify the user
+      if item.title != diff.MenuBarTitle() {
+        self.notifyAboutDiff(diff)
+      }
+      
       item.title = diff.MenuBarTitle()
       return
     }
