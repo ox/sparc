@@ -5,7 +5,7 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>925F9A4E-BD8A-4E9C-AA98-EABE0FD6373A</string>
+	<string>0F1BA0E5-6412-4BE7-8A6E-FEF224E250A8</string>
 	<key>IDESourceControlProjectName</key>
 	<string>Sparc</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
@@ -34,7 +34,7 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>4A6A1874481D25BD258BD3D90663E2913A0295A5</string>
 			<key>IDESourceControlWCCName</key>
-			<string>sparc</string>
+			<string>Sparc</string>
 		</dict>
 	</array>
 </dict>

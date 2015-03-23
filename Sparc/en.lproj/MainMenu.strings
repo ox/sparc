@@ -11,5 +11,8 @@
 /* Class = "NSTextFieldCell"; title = "For now, Sparc uses your ~/.arcrc to interact with your Phabricator instance"; ObjectID = "azk-Cb-aOA"; */
 "azk-Cb-aOA.title" = "For now, Sparc uses your ~/.arcrc to interact with your Phabricator instance";
 
+/* Class = "NSMenuItem"; title = "Differential"; ObjectID = "tZ7-oU-biF"; */
+"tZ7-oU-biF.title" = "Differential";
+
 /* Class = "NSMenuItem"; title = "Quit"; ObjectID = "zEp-cR-lhg"; */
 "zEp-cR-lhg.title" = "Quit";

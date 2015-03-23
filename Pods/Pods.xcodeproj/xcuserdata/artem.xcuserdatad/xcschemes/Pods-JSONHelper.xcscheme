@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BA8C82C110DC35219F391AAB"
+               BlueprintIdentifier = "5F7543C0BA1CC95839350865"
                BuildableName = "JSONHelper.framework"
                BlueprintName = "Pods-JSONHelper"
                ReferencedContainer = "container:Pods.xcodeproj">
