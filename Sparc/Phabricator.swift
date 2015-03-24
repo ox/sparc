@@ -40,11 +40,11 @@ class ArcRC : Deserializable {
 class Phabricator {
   var host : NSURL?
   var connected : Bool = false
+  var userPHID : String = ""
   private var username : String?
   private var certificate : String?
   private var sessionKey : String?
   private var connectionID : Int?
-  private var userPHID : String?
   
   init(atURL: NSURL, forUser: String, withCert: String) {
     self.host = atURL
@@ -153,7 +153,7 @@ class Phabricator {
         let result = json["result"]
         self.connectionID = result["connectionID"].int
         self.sessionKey = result["sessionKey"].string
-        self.userPHID = result["userPHID"].string
+        self.userPHID = result["userPHID"].string!
         self.connected = true
         promise.resolve([:])
       }
@@ -170,7 +170,7 @@ class Phabricator {
     }
     
     let queryParams : [String:AnyObject] = [
-      "authors" : NSArray(object: self.userPHID!),
+      "authors" : NSArray(object: self.userPHID),
       "status": "status-open"
     ]
     
@@ -180,7 +180,7 @@ class Phabricator {
         let result = json["result"]
         var diffs : [Diff]?
         diffs <<<<* result.rawValue
-        promise.resolve(diffs!.filter { $0.status == 1 || $0.status == 2 })
+        promise.resolve(diffs!.filter { $0.status == .NeedsRevision || $0.status == .Accepted })
       }
     
     return promise.promise
@@ -195,7 +195,7 @@ class Phabricator {
     }
     
     let queryParams : [String:AnyObject] = [
-      "reviewers" : NSArray(object: self.userPHID!),
+      "reviewers" : NSArray(object: self.userPHID),
       "status": "status-open"
     ]
     
@@ -205,7 +205,7 @@ class Phabricator {
         let result = json["result"]
         var diffs : [Diff]?
         diffs <<<<* result.rawValue
-        promise.resolve(diffs!.filter { $0.status == 0 })
+        promise.resolve(diffs!.filter { $0.status == .NeedsReview })
     }
     
     return promise.promise

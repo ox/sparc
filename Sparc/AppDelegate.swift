@@ -20,20 +20,25 @@ class AppDelegate: NSObject, NSUserNotificationCenterDelegate, NSApplicationDele
 
   // Settings window
   @IBOutlet weak var settingsWindow: NSWindow!
+  var notifyClosedDiffFromReviewees = false
+  @IBAction func toggleClosedDiffNotification(sender: NSButton) {
+    notifyClosedDiffFromReviewees = !notifyClosedDiffFromReviewees
+    userDefaults.setBool(notifyClosedDiffFromReviewees, forKey:"NotifyClosedDiffFromReviewees")
+    userDefaults.synchronize()
+  }
   
   // NSMenu
-  @IBOutlet weak var statusMenu: NSMenu!
-  
-  // Variable length StatusItem
-  let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1)
+  var statusBar = NSStatusBar.systemStatusBar()
+  var statusMenu: NSMenu = NSMenu()
+  var statusItem : NSStatusItem = NSStatusItem()
   
   func applicationDidFinishLaunching(aNotification: NSNotification) {
-    let defaultsToRegister = ["PhabricatorUrl": ""]
+    let defaultsToRegister = ["PhabricatorUrl": "", "NotifyClosedDiffFromReviewees": false]
     userDefaults.registerDefaults(defaultsToRegister)
     userDefaults.synchronize()
     
-    // The text that will be shown in the menu bar
-    statusItem.title = "";
+    // Variable length StatusItem
+    statusItem = statusBar.statusItemWithLength(-1)
 
     // Change size of menubar icon to be no bigger than the statusbar
     // TODO: Figure out how to get OSX to do this for me
@@ -41,14 +46,19 @@ class AppDelegate: NSObject, NSUserNotificationCenterDelegate, NSApplicationDele
     let thickness = NSStatusBar.systemStatusBar().thickness
     menubarIcon?.size = NSSize(width: thickness, height: thickness)
     statusItem.image = menubarIcon
+    // Bug in OSX? Title text appears cut-off on initial load.
+    statusItem.title = " ";
     statusItem.menu = statusMenu
+
     
     API = Phabricator(arcRCFilePath: "~/.arcrc".stringByExpandingTildeInPath)
     if let api = API {
       api.connect()
         .then { _ in
           self.refreshDiffs()
-          self.timer = NSTimer.scheduledTimerWithTimeInterval(60, target: self, selector: Selector("refreshDiffs"), userInfo: [:], repeats: true)
+          self.timer = NSTimer.scheduledTimerWithTimeInterval(20, target: self, selector: Selector("refreshDiffs"), userInfo: [:], repeats: true)
+        }.catch { error in
+          NSLog("error connecting to Phabricator: %@", error as NSError!)
         }
     }
   }
@@ -67,27 +77,39 @@ class AppDelegate: NSObject, NSUserNotificationCenterDelegate, NSApplicationDele
               } else {
                 self.statusItem.title = ""
               }
+              
+              let items = self.statusMenu.itemArray as Array<NSMenuItem>
 
-              // Rebuild the menu
+              // Rebuild the menu, from the bottom up as adding NSMenuItems inserts at index 0.
               self.statusMenu.removeAllItems()
               
               for (index, diff) in enumerate(authored) {
-                self.addMenuItemForDiff(diff, keyEquivalent: String(format: "%d", index))
+                self.addMenuItemForDiff(diff,
+                  keyEquivalent: String(format: "%d", (toReview.count + authored.count) - index))
+                self.notifyAboutDiffIfNew(diff, items: items)
               }
               
-              self.statusMenu.addItem(NSMenuItem.separatorItem())
+              if authored.count > 0 {
+                self.statusMenu.addItem(NSMenuItem.separatorItem())
+              }
               
               for (index, diff) in enumerate(toReview) {
-                self.addMenuItemForDiff(diff, keyEquivalent: String(format: "%d", authored.count + index))
+                self.addMenuItemForDiff(diff,
+                  keyEquivalent: String(format: "%d", toReview.count - index))
+                self.notifyAboutDiffIfNew(diff, items: items)
               }
               
-              self.statusMenu.addItem(NSMenuItem.separatorItem())
-
+              if toReview.count > 0 {
+                self.statusMenu.addItem(NSMenuItem.separatorItem())
+              }
+              
               self.statusMenu.addItem(NSMenuItem(title: "Differential", action: Selector("openDifferentialHostURL:"), keyEquivalent: ""))
               self.statusMenu.addItem(NSMenuItem(title: "Settings", action: Selector("openSettings:"), keyEquivalent: ""))
               self.statusMenu.addItem(NSMenuItem(title: "Quit", action: Selector("quit:"), keyEquivalent: "q" ))
             }
           }
+        }.catch { error in
+          NSLog("error fetching authored and diffs to review: %@", error as NSError!)
         }
     }
   }
@@ -112,7 +134,6 @@ class AppDelegate: NSObject, NSUserNotificationCenterDelegate, NSApplicationDele
     menuItem.keyEquivalent = keyEquivalent
     menuItem.tag = diff.ID
     statusMenu.insertItem(menuItem, atIndex:0)
-    self.notifyAboutDiff(diff)
   }
   
   // MARK: Opening Things
@@ -141,25 +162,46 @@ class AppDelegate: NSObject, NSUserNotificationCenterDelegate, NSApplicationDele
 
   // MARK: Notifications
   
+  func notifyAboutDiffIfNew(diff : Diff, items : Array<NSMenuItem>) {
+    let existed = items.filter { return $0.title == diff.MenuBarTitle() }
+    if existed.count == 0 {
+      self.notifyAboutDiff(diff)
+    }
+  }
+  
   func notifyAboutDiff(diff: Diff) {
     var notification:NSUserNotification = NSUserNotification()
     
-    let status : Int = diff.status!
-    switch status {
-    case 0:
-      // Status 0 means their diff needs initial review. Don't notify the user about that.
-      return;
-    case 1:
-      notification.title = String(format: "D%d Needs Revision", diff.ID)
-      notification.informativeText = "The reviewers requested changes to your Diff"
-    case 2:
-      notification.title = String(format: "D%d Accepted", diff.ID)
-      notification.informativeText = "Your Diff has been accepted! You may land it now."
-    default:
-      notification.title = String(format: "D%d %@", diff.ID, diff.statusName)
-      notification.informativeText = "Something happened to your Diff."
+    if let status : DiffStatus = diff.status {
+      switch status {
+      case .Closed:
+        // Don't notify the user that a diff has closed
+        return
+      case .NeedsReview where diff.authorPHID == self.API?.userPHID:
+        // Don't notify the user that they submitted a diff.
+        return
+      case .NeedsReview:
+        notification.title = String(format: "D%d Needs Review", diff.ID)
+        notification.informativeText = "You have been requested to review a Diff"
+      case .NeedsRevision where diff.authorPHID == self.API?.userPHID:
+        notification.title = String(format: "D%d Needs Revision", diff.ID)
+        notification.informativeText = "The reviewers requested changes to your Diff"
+      case .Accepted where diff.authorPHID == self.API?.userPHID:
+        notification.title = String(format: "D%d Accepted", diff.ID)
+        notification.informativeText = "Your Diff has been accepted! You may land it now"
+      case .Accepted:
+        // Notify the user that another reviewer has accepted this diff
+        notification.title = String(format: "D%d Was Accepted By Another Reviewer", diff.ID)
+        notification.informativeText = "A Diff you were meant to review was accepted by another reviewer"
+      case .Abandoned where diff.authorPHID != self.API?.userPHID:
+        notification.title = String(format: "D%d Was Abandoned", diff.ID)
+        notification.informativeText = "The Diff was abandoned by the author"
+      default:
+        notification.title = String(format: "D%d %@", diff.ID, diff.statusName)
+        notification.informativeText = "A Diff changed it's status"
+      }
     }
-
+    
     notification.hasActionButton = true
     notification.actionButtonTitle = "View"
     notification.userInfo = NSDictionary(object: diff.URI.URLString, forKey: "URL")

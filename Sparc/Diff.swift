@@ -9,6 +9,14 @@
 import Foundation
 import JSONHelper
 
+enum DiffStatus : Int {
+  case NeedsReview = 0,
+      NeedsRevision,
+      Accepted,
+      Closed,
+      Abandoned
+}
+
 class Diff : Deserializable {
   var ID : Int = 0
   
@@ -19,7 +27,7 @@ class Diff : Deserializable {
   //    2 - Accepted
   //    3 - Closed
   //    4 - Abandoned
-  var status : Int?
+  var status : DiffStatus?
   var statusName : String = ""
   
   var title : String = ""
@@ -29,12 +37,19 @@ class Diff : Deserializable {
   var createdAt : NSDate = NSDate()
   var modifiedAt : NSDate = NSDate()
   
+  var authorPHID : String = ""
   var reviewerPHIDs : [String] = []
 
   convenience required init(data : [String: AnyObject]) {
     self.init()
     ID <<< data["id"]
-    status <<< data["status"]
+    
+    var statusInt : Int?
+    statusInt <<< data["status"]
+    if let statusInt = statusInt {
+      self.status = DiffStatus(rawValue: statusInt)
+    }
+    
     statusName <<< data["statusName"]
     title <<< data["title"]
     branch <<< data["branch"]
@@ -48,6 +63,7 @@ class Diff : Deserializable {
     modifiedAtInterval <<< data["dateModified"]
     modifiedAt = NSDate(timeIntervalSince1970: NSTimeInterval(modifiedAtInterval))
     
+    authorPHID <<< data["authorPHID"]
     reviewerPHIDs <<< data["reviewers"]
   }
   
@@ -56,7 +72,7 @@ class Diff : Deserializable {
     dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
     dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
     dateFormatter.doesRelativeDateFormatting = true
-    return String(format: "%@: %d (%@)", self.statusName, self.ID, dateFormatter.stringFromDate(self.modifiedAt))
+    return String(format: "%@: D%d (%@)", self.statusName, self.ID, dateFormatter.stringFromDate(self.modifiedAt))
   }
   
   // TODO(artem): conforming to NSCoding should happen some day? not sure if it's necessary
