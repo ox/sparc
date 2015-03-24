@@ -24,6 +24,7 @@ class AppDelegate: NSObject, NSUserNotificationCenterDelegate, NSApplicationDele
   // NSMenu
   @IBOutlet weak var statusMenu: NSMenu!
   
+  // Variable length StatusItem
   let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1)
   
   func applicationDidFinishLaunching(aNotification: NSNotification) {
@@ -32,7 +33,14 @@ class AppDelegate: NSObject, NSUserNotificationCenterDelegate, NSApplicationDele
     userDefaults.synchronize()
     
     // The text that will be shown in the menu bar
-    statusItem.title = "Sparc";
+    statusItem.title = "";
+
+    // Change size of menubar icon to be no bigger than the statusbar
+    // TODO: Figure out how to get OSX to do this for me
+    var menubarIcon = NSImage(named: "Menubar Icon")
+    let thickness = NSStatusBar.systemStatusBar().thickness
+    menubarIcon?.size = NSSize(width: thickness, height: thickness)
+    statusItem.image = menubarIcon
     statusItem.menu = statusMenu
     
     API = Phabricator(arcRCFilePath: "~/.arcrc".stringByExpandingTildeInPath)
@@ -51,9 +59,15 @@ class AppDelegate: NSObject, NSUserNotificationCenterDelegate, NSApplicationDele
         .then { authored, toReview in
           if let authored = authored as? [Diff] {
             if let toReview = toReview as? [Diff] {
-              var newTitle = String(format: "Sparc: %d", authored.count + toReview.count)
-              self.statusItem.title = newTitle
               
+              let totalDiffsToView = authored.count + toReview.count
+              if totalDiffsToView > 0 {
+                var newTitle = String(format: "%d", totalDiffsToView)
+                self.statusItem.title = newTitle
+              } else {
+                self.statusItem.title = ""
+              }
+
               // Rebuild the menu
               self.statusMenu.removeAllItems()
               
