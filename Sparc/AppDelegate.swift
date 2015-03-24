@@ -24,18 +24,6 @@ class AppDelegate: NSObject, NSUserNotificationCenterDelegate, NSApplicationDele
   // NSMenu
   @IBOutlet weak var statusMenu: NSMenu!
   
-  @IBAction func openDifferentialHostURL(sender: AnyObject) {
-    if let hostURL = self.API?.host {
-      let differential = hostURL.URLByDeletingLastPathComponent!.URLByAppendingPathComponent("/differential")
-      NSWorkspace.sharedWorkspace().openURL(differential)
-    }
-  }
-  
-  @IBAction func settingsMenuItem(sender: AnyObject) {
-      settingsWindow.makeKeyAndOrderFront(sender)
-      NSApp.activateIgnoringOtherApps(true)
-  }
-  
   let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1)
   
   func applicationDidFinishLaunching(aNotification: NSNotification) {
@@ -66,18 +54,54 @@ class AppDelegate: NSObject, NSUserNotificationCenterDelegate, NSApplicationDele
               var newTitle = String(format: "Sparc: %d", authored.count + toReview.count)
               self.statusItem.title = newTitle
               
-              for diff in authored {
-                self.addMenuItemForDiff(diff)
+              // Rebuild the menu
+              self.statusMenu.removeAllItems()
+              
+              for (index, diff) in enumerate(authored) {
+                self.addMenuItemForDiff(diff, keyEquivalent: String(format: "%d", index))
               }
               
-              for diff in toReview {
-                self.addMenuItemForDiff(diff)
+              self.statusMenu.addItem(NSMenuItem.separatorItem())
+              
+              for (index, diff) in enumerate(toReview) {
+                self.addMenuItemForDiff(diff, keyEquivalent: String(format: "%d", authored.count + index))
               }
+              
+              self.statusMenu.addItem(NSMenuItem.separatorItem())
+
+              self.statusMenu.addItem(NSMenuItem(title: "Differential", action: Selector("openDifferentialHostURL:"), keyEquivalent: ""))
+              self.statusMenu.addItem(NSMenuItem(title: "Settings", action: Selector("openSettings:"), keyEquivalent: ""))
+              self.statusMenu.addItem(NSMenuItem(title: "Quit", action: Selector("quit:"), keyEquivalent: "q" ))
             }
           }
         }
     }
   }
+  
+  //Add menuItem to menu
+  func addMenuItemForDiff(diff : Diff, keyEquivalent: String) {
+    // Check if the item already exists, update it's title if it does
+    if let item = statusMenu.itemWithTag(diff.ID) {
+      // If there was a change of status for the diff, notify the user
+      if item.title != diff.MenuBarTitle() {
+        self.notifyAboutDiff(diff)
+      }
+      
+      item.title = diff.MenuBarTitle()
+      return
+    }
+    
+    var menuItem : NSMenuItem = NSMenuItem()
+    menuItem.title = diff.MenuBarTitle()
+    menuItem.action = Selector("openDiffURL:")
+    menuItem.representedObject = diff.URI.URLString
+    menuItem.keyEquivalent = keyEquivalent
+    menuItem.tag = diff.ID
+    statusMenu.insertItem(menuItem, atIndex:0)
+    self.notifyAboutDiff(diff)
+  }
+  
+  // MARK: Opening Things
   
   func openDiffURL(sender : AnyObject) {
     if let diffUrl = sender.representedObject as? String {
@@ -88,6 +112,20 @@ class AppDelegate: NSObject, NSUserNotificationCenterDelegate, NSApplicationDele
       NSWorkspace.sharedWorkspace().openURL(NSURL(string: diffUrl)!)
     }
   }
+  
+  func openSettings(sender: AnyObject) {
+    settingsWindow.makeKeyAndOrderFront(sender)
+    NSApp.activateIgnoringOtherApps(true)
+  }
+  
+  func openDifferentialHostURL(sender: AnyObject) {
+    if let hostURL = self.API?.host {
+      let differential = hostURL.URLByDeletingLastPathComponent!.URLByAppendingPathComponent("/differential")
+      NSWorkspace.sharedWorkspace().openURL(differential)
+    }
+  }
+
+  // MARK: Notifications
   
   func notifyAboutDiff(diff: Diff) {
     var notification:NSUserNotification = NSUserNotification()
@@ -132,29 +170,8 @@ class AppDelegate: NSObject, NSUserNotificationCenterDelegate, NSApplicationDele
       return true
   }
 
-  //Add menuItem to menu
-  func addMenuItemForDiff(diff : Diff) {
-    // Check if the item already exists, update it's title if it does
-    if let item = statusMenu.itemWithTag(diff.ID) {
-      // If there was a change of status for the diff, notify the user
-      if item.title != diff.MenuBarTitle() {
-        self.notifyAboutDiff(diff)
-      }
-      
-      item.title = diff.MenuBarTitle()
-      return
-    }
-    
-    var menuItem : NSMenuItem = NSMenuItem()
-    menuItem.title = diff.MenuBarTitle()
-    menuItem.action = Selector("openDiffURL:")
-    menuItem.representedObject = diff.URI.URLString
-    menuItem.keyEquivalent = ""
-    menuItem.tag = diff.ID
-    statusMenu.insertItem(menuItem, atIndex:0)
-    self.notifyAboutDiff(diff)
-  }
-
+  // MARK: NSApplication - Other
+  
   func applicationWillTerminate(aNotification: NSNotification) {
     // Insert code here to tear down your application
     timer?.invalidate()

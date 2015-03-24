@@ -45,21 +45,11 @@
                 <menuItem isSeparatorItem="YES" id="Ybs-jQ-cFC"/>
                 <menuItem title="Differential" id="tZ7-oU-biF">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="openDifferentialHostURL:" target="Voe-Tx-rLC" id="KkW-bJ-spi"/>
-                    </connections>
                 </menuItem>
                 <menuItem title="Settings" id="A3k-Zf-VgP">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="settingsMenuItem:" target="Voe-Tx-rLC" id="lC2-Zo-jgR"/>
-                    </connections>
                 </menuItem>
-                <menuItem title="Quit" id="zEp-cR-lhg">
-                    <connections>
-                        <action selector="quit:" target="Voe-Tx-rLC" id="U26-xs-JZP"/>
-                    </connections>
-                </menuItem>
+                <menuItem title="Quit" id="zEp-cR-lhg"/>
             </items>
             <point key="canvasLocation" x="320" y="743.5"/>
         </menu>
