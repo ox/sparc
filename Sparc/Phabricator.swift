@@ -108,6 +108,14 @@ class Phabricator {
   
     var promise = PromiseSource<AnyObject>()
     Alamofire.request(.POST, requestUrl!, parameters: parameters)
+      .responseJSON { (request: NSURLRequest, response: NSHTTPURLResponse?, json, error) in
+        NSLog("%@ request to %@ with body:\n\t%@", request.HTTPMethod!, requestUrl!,
+          NSString(data: request.HTTPBody!, encoding: NSUTF8StringEncoding)!)
+        
+        if let json = JSONObject(json) {
+          NSLog("response from %@ with:\n\t%@", requestUrl!, json)
+        }
+      }
       .responseJSONPromise()
       .then { json in
           let swiftyjson = JSON(json)
