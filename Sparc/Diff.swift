@@ -68,11 +68,7 @@ class Diff : Deserializable {
   }
   
   func MenuBarTitle() -> String {
-    var dateFormatter = NSDateFormatter()
-    dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
-    dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
-    dateFormatter.doesRelativeDateFormatting = true
-    return String(format: "%@: D%d (%@)", self.statusName, self.ID, dateFormatter.stringFromDate(self.modifiedAt))
+    return String(format: "%@: D%d (%@)", self.statusName, self.ID, self.branch)
   }
   
   // TODO(artem): conforming to NSCoding should happen some day? not sure if it's necessary
