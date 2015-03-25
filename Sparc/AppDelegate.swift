@@ -57,8 +57,11 @@ class AppDelegate: NSObject, NSUserNotificationCenterDelegate, NSApplicationDele
         .then { _ in
           self.refreshDiffs()
           self.timer = NSTimer.scheduledTimerWithTimeInterval(20, target: self, selector: Selector("refreshDiffs"), userInfo: [:], repeats: true)
-        }.catch { error in
-          NSLog("error connecting to Phabricator: %@", error as NSError!)
+        }.catch { (error: NSError!) in
+          NSLog("error connecting to Phabricator: %@. Stopping.", error)
+          var alert = NSAlert(error: error)
+          alert.runModal()
+          self.timer?.invalidate()
         }
     }
   }
@@ -108,8 +111,11 @@ class AppDelegate: NSObject, NSUserNotificationCenterDelegate, NSApplicationDele
               self.statusMenu.addItem(NSMenuItem(title: "Quit", action: Selector("quit:"), keyEquivalent: "q" ))
             }
           }
-        }.catch { error in
-          NSLog("error fetching authored and diffs to review: %@", error as NSError!)
+        }.catch { (error: NSError!) in
+          NSLog("error fetching authored and diffs to review: %@", error)
+          let alert = NSAlert(error: error)
+          alert.runModal()
+          self.timer?.invalidate()
         }
     }
   }
