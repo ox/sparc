@@ -1,6 +1,0 @@
-framework module Promissum {
-  umbrella header "Pods-Promissum-umbrella.h"
-
-  export *
-  module * { export * }
-}
