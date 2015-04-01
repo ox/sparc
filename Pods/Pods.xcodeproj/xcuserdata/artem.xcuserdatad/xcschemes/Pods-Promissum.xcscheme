@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "91E8DFB2BFCD8B2788B600DE"
+               BlueprintIdentifier = "71DEDC54A7BC704FF1741816"
                BuildableName = "Promissum.framework"
                BlueprintName = "Pods-Promissum"
                ReferencedContainer = "container:Pods.xcodeproj">

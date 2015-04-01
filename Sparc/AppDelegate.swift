@@ -16,7 +16,8 @@ class AppDelegate: NSObject, NSUserNotificationCenterDelegate, NSApplicationDele
   var userDefaults = NSUserDefaults.standardUserDefaults()
 
   var API : Phabricator?
-  var timer : NSTimer?
+  var reauthTimer : NSTimer?
+  var refreshDiffTimer : NSTimer?
 
   // Settings window
   @IBOutlet weak var settingsWindow: NSWindow!
@@ -53,16 +54,33 @@ class AppDelegate: NSObject, NSUserNotificationCenterDelegate, NSApplicationDele
     
     API = Phabricator(arcRCFilePath: "~/.arcrc".stringByExpandingTildeInPath)
     if let api = API {
-      api.connect()
-        .then { _ in
-          self.refreshDiffs()
-          self.timer = NSTimer.scheduledTimerWithTimeInterval(20, target: self, selector: Selector("refreshDiffs"), userInfo: [:], repeats: true)
-        }.catch { (error: NSError!) in
-          NSLog("error connecting to Phabricator: %@. Stopping.", error)
-          var alert = NSAlert(error: error)
-          alert.runModal()
-          self.timer?.invalidate()
+      self.connectToPhabricator(api)
+    }
+  }
+  
+  // Start the reauth timer that tries to
+  func startReauthTimer() {
+    self.reauthTimer = NSTimer.scheduledTimerWithTimeInterval(60, target: self, selector: Selector("connectToPhabricator"), userInfo: [:], repeats: true)
+  }
+  
+  func connectToPhabricator(api: Phabricator) {
+    api.connect()
+      .then { _ in
+        // If the reauth timer is going, stop it
+        if let timer : NSTimer = self.reauthTimer {
+          timer.invalidate()
         }
+        
+        self.refreshDiffs()
+        self.refreshDiffTimer = NSTimer.scheduledTimerWithTimeInterval(20, target: self, selector: Selector("refreshDiffs"), userInfo: [:], repeats: true)
+      }.catch { (error: NSError!) in
+        NSLog("error connecting to Phabricator: %@. Stopping.", error)
+        var alert = NSAlert(error: error)
+        alert.runModal()
+        self.refreshDiffTimer?.invalidate()
+        
+        // If we get an error connecting to Phabricator, try again
+        self.startReauthTimer()
     }
   }
   
@@ -115,7 +133,10 @@ class AppDelegate: NSObject, NSUserNotificationCenterDelegate, NSApplicationDele
           NSLog("error fetching authored and diffs to review: %@", error)
           let alert = NSAlert(error: error)
           alert.runModal()
-          self.timer?.invalidate()
+          self.refreshDiffTimer?.invalidate()
+          
+          // Start the reauth timer if we ever get an error from Phabricator
+          self.startReauthTimer()
         }
     }
   }
@@ -236,7 +257,7 @@ class AppDelegate: NSObject, NSUserNotificationCenterDelegate, NSApplicationDele
   
   func applicationWillTerminate(aNotification: NSNotification) {
     // Insert code here to tear down your application
-    timer?.invalidate()
+    refreshDiffTimer?.invalidate()
   }
   
   func setWindowVisible(sender: AnyObject){
@@ -248,7 +269,7 @@ class AppDelegate: NSObject, NSUserNotificationCenterDelegate, NSApplicationDele
   }
   
   @IBAction func quit(sender: AnyObject?) {
-    timer?.invalidate()
+    refreshDiffTimer?.invalidate()
     NSApplication.sharedApplication().terminate(self)
   }
 }

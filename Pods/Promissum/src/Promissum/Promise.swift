@@ -77,7 +77,7 @@ public class Promise<T> : PromiseNotifier {
 
     return source.promise
   }
-  
+
   public func flatMap<U>(transform: T -> Promise<U>) -> Promise<U> {
     let source = PromiseSource<U>()
 
@@ -233,7 +233,7 @@ public class Promise<T> : PromiseNotifier {
 
     }
   }
-  
+
   private func addErrorHandler(handler: NSError -> Void) {
 
     switch state {

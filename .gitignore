@@ -1,3 +1,5 @@
 .DS_Store
 build
 Podfile.lock
+Pods
+Sparc.xcworkspace/
